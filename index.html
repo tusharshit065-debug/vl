@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>For Arty 🤍</title>
+
+    <!-- Handwritten Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Patrick+Hand&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ff4d6d, #ff8fab);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: #fff;
+        font-family: "Patrick Hand", cursive;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.18);
+        padding: 42px 32px;
+        border-radius: 26px;
+        backdrop-filter: blur(14px);
+        box-shadow: 0 28px 55px rgba(0, 0, 0, 0.25);
+        max-width: 440px;
+        width: 92%;
+        text-align: center;
+        animation: fadeIn 1s ease;
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        font-family: "Pacifico", cursive;
+        font-size: 2.3rem;
+        margin-bottom: 12px;
+      }
+
+      p {
+        font-size: 1.15rem;
+        line-height: 1.75;
+        margin-bottom: 22px;
+      }
+
+      .buttons {
+        position: relative;
+        height: 80px;
+      }
+
+      .btn {
+        border: none;
+        padding: 12px 28px;
+        font-size: 1.05rem;
+        border-radius: 30px;
+        cursor: pointer;
+        background: #fff;
+        position: absolute;
+        user-select: none;
+        font-family: "Patrick Hand", cursive;
+      }
+
+      #yesBtn {
+        color: #ff4d6d;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      #noBtn {
+        color: #333;
+        left: calc(50% + 120px);
+        transform: translateX(-50%);
+      }
+
+      .message {
+        display: none;
+        margin-top: 22px;
+        font-size: 1.15rem;
+        animation: fadeIn 0.8s ease;
+      }
+
+      .heart {
+        position: fixed;
+        bottom: -40px;
+        font-size: 18px;
+        pointer-events: none;
+        opacity: 0.85;
+        animation: floatUp linear forwards;
+      }
+
+      @keyframes floatUp {
+        from {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(-120vh);
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <audio id="bgMusic" loop>
+      <source src="dooron-dooron.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- PAGE 1 -->
+    <div class="card" id="mainCard">
+      <h1>Arty 🤍🧿</h1>
+      <p>Will you be my Valentine?</p>
+
+      <div class="buttons">
+        <button id="yesBtn" class="btn">Yes 🤍</button>
+        <button id="noBtn" class="btn">No</button>
+      </div>
+
+      <div class="message" id="response"></div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="card" id="notePage" style="display: none">
+      <h1>Just From My Heart 🤍🧿</h1>
+      <p style="text-align: left">
+        💻 Love Program Running..<br /><br />
+
+        Hehehe 🤍<br />
+
+        Always for you, babaa 🫂<br />
+
+        Protected by love 🧿🤍<br />
+
+        Seeing you happy = my favorite output ✨<br /><br />
+      </p>
+    </div>
+
+    <script>
+      (function () {
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const response = document.getElementById("response");
+        const music = document.getElementById("bgMusic");
+        const container = document.querySelector(".buttons");
+
+        document.body.addEventListener(
+          "pointerdown",
+          () => {
+            if (music.paused) music.play().catch(() => {});
+          },
+          { once: true },
+        );
+
+        yesBtn.addEventListener("click", () => {
+          response.style.display = "block";
+          response.innerHTML =
+            "You just made my heart feel lighter 🤍🧿<br>Today, tomorrow, and always.";
+
+          noBtn.disabled = true;
+
+          setTimeout(() => {
+            document.getElementById("mainCard").style.display = "none";
+            document.getElementById("notePage").style.display = "block";
+          }, 2600);
+        });
+
+        function runAway() {
+          const rect = container.getBoundingClientRect();
+          const maxX = rect.width - noBtn.offsetWidth;
+          const maxY = rect.height - noBtn.offsetHeight;
+          noBtn.style.left = Math.random() * maxX + "px";
+          noBtn.style.top = Math.random() * maxY + "px";
+        }
+
+        noBtn.addEventListener("mouseenter", runAway);
+        noBtn.addEventListener("pointermove", runAway);
+        noBtn.addEventListener("focus", runAway);
+
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.textContent = "🤍";
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.fontSize = 14 + Math.random() * 20 + "px";
+          heart.style.animationDuration = 5 + Math.random() * 4 + "s";
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 9000);
+        }, 600);
+      })();
+    </script>
+  </body>
+</html>
